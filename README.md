@@ -1,0 +1,8 @@
+15/01/26:
+- création du projet
+- Développement du routeur index.php
+- Création des dossiers /controllers, /models, /views
+- Mise en place du login_controller -> login_model
+- Mise en place du logout
+- Ajout d'une régénération PHPSESSID
+- Protection d'accès via le home_controller
