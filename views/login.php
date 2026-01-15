@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Insérer ici ton CSS fourni plus haut */
-        /* ... ton CSS ... */
+        /* ... CSS ... */
 
-        /* AJOUT SPÉCIFIQUE POUR LA PAGE LOGIN */
+
         /* Surcharge pour centrer verticalement car ton body n'est pas flex par défaut */
         .login-wrapper {
             min-height: 100vh;
@@ -24,14 +23,14 @@
             background-color: #f8f9fa;
         }
 
-        /* Réutilisation de ton dégradé sidebar pour l'entête de la card */
+
         .login-header {
             background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
             color: white;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Personnalisation du bouton pour matcher le thème */
+
         .btn-theme {
             background-color: #1e40af;
             color: white;
