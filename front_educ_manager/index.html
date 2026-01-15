@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Admin - Gestion des Étudiants</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h4><i class="bi bi-mortarboard-fill"></i> EduAdmin</h4>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#dashboard">
+            <i class="bi bi-speedometer2"></i> Tableau de bord
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#students">
+            <i class="bi bi-people-fill"></i> Étudiants
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#courses">
+            <i class="bi bi-book-fill"></i> Cours
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#grades">
+            <i class="bi bi-clipboard-data"></i> Notes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#teachers">
+            <i class="bi bi-person-badge"></i> Enseignants
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#schedule">
+            <i class="bi bi-calendar-event"></i> Planning
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#reports">
+            <i class="bi bi-file-earmark-bar-graph"></i> Rapports
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#settings">
+            <i class="bi bi-gear-fill"></i> Paramètres
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <a class="nav-link" href="#logout">
+          <i class="bi bi-box-arrow-right"></i> Déconnexion
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container-fluid">
+          <button class="btn btn-link" id="sidebarToggle">
+            <i class="bi bi-list fs-4"></i>
+          </button>
+
+          <form
+            class="d-flex me-auto ms-3"
+            style="max-width: 400px; width: 100%"
+          >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search"></i>
+              </span>
+              <input
+                class="form-control border-start-0"
+                type="search"
+                placeholder="Rechercher un étudiant..."
+                aria-label="Search"
+              />
+            </div>
+          </form>
+
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link position-relative"
+                href="#notifications"
+                data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-bell fs-5"></i>
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  3
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><h6 class="dropdown-header">Notifications</h6></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><small>Nouveau étudiant inscrit</small></a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><small>Notes mises à jour</small></a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><small>Réunion prévue demain</small></a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown ms-3">
+              <a
+                class="nav-link dropdown-toggle d-flex align-items-center"
+                href="#profile"
+                id="navbarDropdown"
+                data-bs-toggle="dropdown"
+              >
+                <img
+                  src="https://ui-avatars.com/api/?name=Admin+User&background=0d6efd&color=fff"
+                  alt="Admin"
+                  class="rounded-circle me-2"
+                  width="32"
+                  height="32"
+                />
+                <span>Admin User</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#profile">Mon profil</a></li>
+                <li>
+                  <a class="dropdown-item" href="#settings">Paramètres</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#logout">Déconnexion</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Dashboard Content -->
+      <div class="container-fluid p-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2>Tableau de bord</h2>
+            <p class="text-muted mb-0">
+              Bienvenue sur votre panel d'administration
+            </p>
+          </div>
+          <button class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Nouvel étudiant
+          </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stats-card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="stats-icon bg-primary bg-opacity-10 text-primary rounded-circle p-3 me-3"
+                  >
+                    <i class="bi bi-people-fill fs-4"></i>
+                  </div>
+                  <div>
+                    <h6 class="text-muted mb-1">Total Étudiants</h6>
+                    <h3 class="mb-0">1,248</h3>
+                    <small class="text-success"
+                      ><i class="bi bi-arrow-up"></i> +12% ce mois</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stats-card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="stats-icon bg-success bg-opacity-10 text-success rounded-circle p-3 me-3"
+                  >
+                    <i class="bi bi-book-fill fs-4"></i>
+                  </div>
+                  <div>
+                    <h6 class="text-muted mb-1">Cours Actifs</h6>
+                    <h3 class="mb-0">42</h3>
+                    <small class="text-success"
+                      ><i class="bi bi-arrow-up"></i> +5 nouveaux</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stats-card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="stats-icon bg-warning bg-opacity-10 text-warning rounded-circle p-3 me-3"
+                  >
+                    <i class="bi bi-person-badge fs-4"></i>
+                  </div>
+                  <div>
+                    <h6 class="text-muted mb-1">Enseignants</h6>
+                    <h3 class="mb-0">38</h3>
+                    <small class="text-muted">Tous actifs</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card stats-card border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div
+                    class="stats-icon bg-info bg-opacity-10 text-info rounded-circle p-3 me-3"
+                  >
+                    <i class="bi bi-clipboard-check fs-4"></i>
+                  </div>
+                  <div>
+                    <h6 class="text-muted mb-1">Taux de Réussite</h6>
+                    <h3 class="mb-0">87%</h3>
+                    <small class="text-success"
+                      ><i class="bi bi-arrow-up"></i> +3%</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Students Table -->
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-white py-3">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="mb-0">Liste des Étudiants</h5>
+              </div>
+              <div class="col-auto">
+                <div class="btn-group" role="group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    <i class="bi bi-funnel"></i> Filtrer
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    <i class="bi bi-download"></i> Exporter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="ps-4">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="selectAll"
+                      />
+                    </th>
+                    <th>ID</th>
+                    <th>Nom Complet</th>
+                    <th>Email</th>
+                    <th>Classe</th>
+                    <th>Moyenne</th>
+                    <th>Statut</th>
+                    <th class="text-end pe-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#001</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Sophie+Martin&background=random"
+                          alt="Sophie Martin"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Sophie Martin</span>
+                      </div>
+                    </td>
+                    <td>sophie.martin@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Licence 3</span
+                      >
+                    </td>
+                    <td><strong>16.5/20</strong></td>
+                    <td><span class="badge bg-success">Actif</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#002</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Thomas+Dubois&background=random"
+                          alt="Thomas Dubois"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Thomas Dubois</span>
+                      </div>
+                    </td>
+                    <td>thomas.dubois@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Licence 2</span
+                      >
+                    </td>
+                    <td><strong>14.8/20</strong></td>
+                    <td><span class="badge bg-success">Actif</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#003</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Marie+Leroux&background=random"
+                          alt="Marie Leroux"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Marie Leroux</span>
+                      </div>
+                    </td>
+                    <td>marie.leroux@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Master 1</span
+                      >
+                    </td>
+                    <td><strong>17.2/20</strong></td>
+                    <td><span class="badge bg-success">Actif</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#004</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Lucas+Bernard&background=random"
+                          alt="Lucas Bernard"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Lucas Bernard</span>
+                      </div>
+                    </td>
+                    <td>lucas.bernard@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Licence 1</span
+                      >
+                    </td>
+                    <td><strong>13.5/20</strong></td>
+                    <td><span class="badge bg-warning">En attente</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#005</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Emma+Petit&background=random"
+                          alt="Emma Petit"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Emma Petit</span>
+                      </div>
+                    </td>
+                    <td>emma.petit@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Master 2</span
+                      >
+                    </td>
+                    <td><strong>18.0/20</strong></td>
+                    <td><span class="badge bg-success">Actif</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="ps-4">
+                      <input class="form-check-input" type="checkbox" />
+                    </td>
+                    <td><strong>#006</strong></td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img
+                          src="https://ui-avatars.com/api/?name=Hugo+Moreau&background=random"
+                          alt="Hugo Moreau"
+                          class="rounded-circle me-2"
+                          width="32"
+                          height="32"
+                        />
+                        <span>Hugo Moreau</span>
+                      </div>
+                    </td>
+                    <td>hugo.moreau@ecole.fr</td>
+                    <td>
+                      <span class="badge bg-primary bg-opacity-10 text-primary"
+                        >Licence 3</span
+                      >
+                    </td>
+                    <td><strong>15.3/20</strong></td>
+                    <td><span class="badge bg-danger">Suspendu</span></td>
+                    <td class="text-end pe-4">
+                      <div class="btn-group btn-group-sm" role="group">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          title="Voir"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          title="Modifier"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          title="Supprimer"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-muted">Affichage de 6 sur 1,248 étudiants</div>
+              <nav>
+                <ul class="pagination pagination-sm mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Précédent</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">...</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">125</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Suivant</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row g-4 mt-2">
+          <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Activité Récente</h5>
+              </div>
+              <div class="card-body">
+                <div class="activity-item">
+                  <div
+                    class="activity-icon bg-primary bg-opacity-10 text-primary"
+                  >
+                    <i class="bi bi-person-plus"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p class="mb-0">
+                      <strong>Sophie Martin</strong> a été ajoutée
+                    </p>
+                    <small class="text-muted">Il y a 2 heures</small>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div
+                    class="activity-icon bg-success bg-opacity-10 text-success"
+                  >
+                    <i class="bi bi-clipboard-check"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p class="mb-0">
+                      Notes du cours <strong>Mathématiques</strong> mises à jour
+                    </p>
+                    <small class="text-muted">Il y a 5 heures</small>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div
+                    class="activity-icon bg-warning bg-opacity-10 text-warning"
+                  >
+                    <i class="bi bi-exclamation-triangle"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p class="mb-0">
+                      <strong>Lucas Bernard</strong> - Absence signalée
+                    </p>
+                    <small class="text-muted">Il y a 1 jour</small>
+                  </div>
+                </div>
+                <div class="activity-item mb-0">
+                  <div class="activity-icon bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-calendar-event"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p class="mb-0">
+                      Nouvel événement : <strong>Réunion pédagogique</strong>
+                    </p>
+                    <small class="text-muted">Il y a 2 jours</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Répartition par Classe</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Licence 1</span>
+                    <strong>342 étudiants</strong>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-primary"
+                      role="progressbar"
+                      style="width: 27%"
+                      aria-valuenow="27"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Licence 2</span>
+                    <strong>298 étudiants</strong>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-success"
+                      role="progressbar"
+                      style="width: 24%"
+                      aria-valuenow="24"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Licence 3</span>
+                    <strong>265 étudiants</strong>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-info"
+                      role="progressbar"
+                      style="width: 21%"
+                      aria-valuenow="21"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Master 1</span>
+                    <strong>189 étudiants</strong>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-warning"
+                      role="progressbar"
+                      style="width: 15%"
+                      aria-valuenow="15"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+                <div class="mb-0">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Master 2</span>
+                    <strong>154 étudiants</strong>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-danger"
+                      role="progressbar"
+                      style="width: 12%"
+                      aria-valuenow="12"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+      // Toggle Sidebar
+      document
+        .getElementById("sidebarToggle")
+        .addEventListener("click", function () {
+          document.getElementById("sidebar").classList.toggle("collapsed");
+          document.querySelector(".main-content").classList.toggle("expanded");
+        });
+
+      // Select All Checkbox
+      document
+        .getElementById("selectAll")
+        .addEventListener("change", function () {
+          const checkboxes = document.querySelectorAll(
+            'tbody input[type="checkbox"]'
+          );
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = this.checked;
+          });
+        });
+
+      // Active Nav Links
+      document.querySelectorAll(".sidebar .nav-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          document
+            .querySelectorAll(".sidebar .nav-link")
+            .forEach((l) => l.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
