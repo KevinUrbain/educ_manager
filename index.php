@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//début de session
 
 //Connexion DB
 require 'config/database.php';
