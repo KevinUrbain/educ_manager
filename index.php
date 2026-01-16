@@ -1,9 +1,9 @@
 <?php
 session_start();
-
+//début de session
 
 //Connexion DB
-require 'config/database.php';
+require_once 'config/database.php';
 
 //Routeur simple
 
